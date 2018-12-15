@@ -23,4 +23,10 @@ export const notificationClear = () => {
   }
 }
 
+export const notify = (notification, seconds) => {
+  return (dispatch) => {
+    dispatch(notificationSet(notification))
+    setTimeout(() => dispatch(notificationClear()), seconds * 1000)
+  }
+}
 export default notificationReducer
