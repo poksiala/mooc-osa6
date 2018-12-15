@@ -1,17 +1,26 @@
 import React from 'react'
 import {
   BrowserRouter as Router,
-  Route, Link, Redirect
+  Route, Link
 } from 'react-router-dom'
 
-const Menu = () => (
-  <div>
-    <Link to='/'>Home</Link>
-    <Link to='/anecdotes'>Anecdotes</Link>
-    <Link to='/create'>Create new</Link>
-    <Link to='/about'>About</Link>
-  </div>
-)
+const Menu = () => {
+  const style = {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'pink',
+    padding: '10px'
+  }
+  return (
+    <div style={style}>
+      <Link to='/'>Home</Link>
+      <Link to='/anecdotes'>Anecdotes</Link>
+      <Link to='/create'>Create new</Link>
+      <Link to='/about'>About</Link>
+    </div>
+  )
+}
 
 const Anecdote = ({ anecdote }) => (
   <div>
@@ -165,7 +174,7 @@ class App extends React.Component {
           <div>
             <h1>Software anecdotes</h1>
             <Menu />
-            <div>{this.state.notification}</div>
+            <Notification message={this.state.notification} />
             <Route exact path='/' render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route exact path='/anecdotes' render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route exact path='/anecdotes/:id' render={({ match }) =>
@@ -182,5 +191,18 @@ class App extends React.Component {
     )
   }
 }
+
+const Notification = ({ message }) => {
+  const style = {
+    borderStyle: 'solid',
+    borderRadius: '10px',
+    borderWidth: '2px',
+    borderColor: 'green',
+    color: 'green',
+    padding: '10px',
+  }
+  if (message) return <div style={style}>{message}</div>
+  return null
+} 
 
 export default App
