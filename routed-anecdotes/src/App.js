@@ -3,6 +3,8 @@ import {
   BrowserRouter as Router,
   Route, Link
 } from 'react-router-dom'
+import stallman from './img/stallman.jpg'
+import { Container, Table, Grid } from 'semantic-ui-react'
 
 const Menu = () => {
   const style = {
@@ -32,29 +34,46 @@ const Anecdote = ({ anecdote }) => (
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote =>
-        <li key={anecdote.id} >
-          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
-        </li>
-      )}
-    </ul>
+    <Table striped celled>
+      <Table.Body>
+        {anecdotes.map(anecdote =>
+          <Table.Row key={anecdote.id} >
+            <Table.Cell>
+              <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Table.Body>
+    </Table>
   </div>
 )
 
-const About = () => (
-  <div>
-    <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
+const About = () => {
+  return (
+    <Grid celled>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <h2>About anecdote app</h2>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={10}>
+          <p>According to Wikipedia:</p>
 
-    <em>An anecdote is a brief, revealing account of an individual person or an incident.
-      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
-      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
-      An anecdote is "a story with a point."</em>
+          <em>An anecdote is a brief, revealing account of an individual person or an incident.
+            Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
+            such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
+            An anecdote is "a story with a point."</em>
 
-    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
-  </div>
-)
+          <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <img src={stallman} alt="The hero we need but don't deserve" />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+  )
+}
 
 const Footer = () => (
   <div>
@@ -169,7 +188,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <Router>
           <div>
             <h1>Software anecdotes</h1>
@@ -187,7 +206,8 @@ class App extends React.Component {
           </div>
         </Router>
         <Footer />
-      </div>
+
+      </Container>
     )
   }
 }
