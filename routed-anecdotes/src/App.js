@@ -4,7 +4,11 @@ import {
   Route, Link
 } from 'react-router-dom'
 import stallman from './img/stallman.jpg'
-import { Container, Table, Grid } from 'semantic-ui-react'
+import {
+  Container, Table, Grid, Input,
+  Divider, Form, Button, Message,
+  Card, Image
+} from 'semantic-ui-react'
 
 const Menu = () => {
   const style = {
@@ -50,7 +54,7 @@ const AnecdoteList = ({ anecdotes }) => (
 
 const About = () => {
   return (
-    <Grid celled>
+    <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
           <h2>About anecdote app</h2>
@@ -68,7 +72,13 @@ const About = () => {
           <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
         </Grid.Column>
         <Grid.Column width={6}>
-          <img src={stallman} alt="The hero we need but don't deserve" />
+          <Card>
+            <Image src={stallman} />
+            <Card.Content>
+              <Card.Header>Stallman</Card.Header>
+              <Card.Description>Internet Hall of Famer</Card.Description>
+            </Card.Content>
+          </Card>
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -113,21 +123,21 @@ class CreateNew extends React.Component {
     return(
       <div>
         <h2>create a new anecdote</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            content
-            <input name='content' value={this.state.content} onChange={this.handleChange} />
-          </div>
-          <div>
-            author
-            <input name='author' value={this.state.author} onChange={this.handleChange} />
-          </div>
-          <div>
-            url for more info
-            <input name='info' value={this.state.info} onChange={this.handleChange} />
-          </div>
-          <button>create</button>
-        </form>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
+            <label>Content</label>
+            <Input name='content' value={this.state.content} onChange={this.handleChange} />
+          </Form.Field>
+          <Form.Field>
+            <label>Author</label>
+            <Input name='author' value={this.state.author} onChange={this.handleChange} />
+          </Form.Field>
+          <Form.Field>
+            <label>Url</label>
+            <Input name='info' value={this.state.info} onChange={this.handleChange} />
+          </Form.Field>
+          <Button type='submit' primary>create</Button>
+        </Form>
       </div>
     )
 
@@ -192,7 +202,9 @@ class App extends React.Component {
         <Router>
           <div>
             <h1>Software anecdotes</h1>
+            <Divider />
             <Menu />
+            <Divider />
             <Notification message={this.state.notification} />
             <Route exact path='/' render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route exact path='/anecdotes' render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
@@ -205,6 +217,7 @@ class App extends React.Component {
             />
           </div>
         </Router>
+        <Divider />
         <Footer />
 
       </Container>
@@ -213,16 +226,12 @@ class App extends React.Component {
 }
 
 const Notification = ({ message }) => {
-  const style = {
-    borderStyle: 'solid',
-    borderRadius: '10px',
-    borderWidth: '2px',
-    borderColor: 'green',
-    color: 'green',
-    padding: '10px',
-  }
-  if (message) return <div style={style}>{message}</div>
+  if (message) return (
+    <Message >
+      <Message.Header>{message}</Message.Header>
+    </Message>
+  )
   return null
-} 
+}
 
 export default App
